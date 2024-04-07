@@ -9,10 +9,15 @@
 
 /* CSS variables */
 :root {
-  --mainBackground: rgb(47, 44, 45);
-  --textColor: rgb(39, 194, 31);
-  --themeColor: rgb(124, 86, 21);
-  --contentColor: rgb(212, 135, 84);
+  --mainBackground: rgb(6, 22, 32);
+  --textColor: rgb(44, 129, 179);
+  --themeColor: (31, 86, 225);
+  --contentColor: rgb(221, 221, 221);
+}
+.main-wrapper {
+  max-width: 110rem;
+  /* border: solid red; */
+  margin: auto;
 }
 body {
   background-color: var(--mainBackground);
@@ -116,7 +121,7 @@ h3 {
   background-color: transparent;
 }
 
-#go {
+#timeOkBtn {
   cursor: pointer;
   padding: 10px;
   font-weight: bold;
@@ -128,7 +133,7 @@ h3 {
   font-size: 1.5rem;
   transition: background-color 0.3s, cursor 2s;
 }
-#go:hover {
+#timeOkBtn:hover {
   background-color: var(--themeColor);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.527);
 }
@@ -156,6 +161,11 @@ input::-webkit-inner-spin-button {
   color: rgba(255, 255, 255, 0.591);
 }
 
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
 .options button {
   border: none;
   outline: none;
@@ -214,55 +224,80 @@ img {
   margin-top: 20px;
 }
 
-#resultDiv {
+#resultPage {
   position: fixed;
-  backdrop-filter: blur(14px);
   top: 14%;
   bottom: 14%;
   left: 20%;
   right: 20%;
+  z-index: 100;
   border-radius: 10px;
   background-color: var(--mainBackground);
   display: flex;
+  align-items: center;
+  justify-content: space-around;
   flex-direction: column;
   padding: 50px;
   display: none;
+}
+
+.animation1 {
+  animation: popUp 0.3s ease forwards;
+}
+.animation2 {
+  animation: popDown 0.3s ease forwards;
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0%);
+  }
+  to {
+    transform: scale(100%);
+  }
+}
+@keyframes popDown {
+  from {
+    transform: scale(100%);
+  }
+  to {
+    transform: scale(0%);
+  }
 }
 #transparentBox {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
-  display: none;
   right: 0;
   background-color: rgba(0, 0, 0, 0.8);
+  display: none;
 }
-#result {
+.resultValues {
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
 }
-.ResultTitle {
+#resultPage h1 {
   align-self: center;
   color: var(--textColor);
   font-weight: bold;
   font-size: 4rem;
   margin-bottom: 20px;
 }
-.calculations {
-  color: var(--themeColor);
+
+.resultValues {
+  color: red;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 40px;
 }
-.ahmedka {
-  /* border: solid red; */
-  width: fit-content;
+
+.resultValues div {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  gap: 100px;
+  justify-content: space-between;
 }
-#continueBtn,
+#resultOkBtn,
 #TextBtn {
   align-self: center;
   margin-top: 15px;
@@ -277,7 +312,6 @@ img {
 }
 #customWordsBox {
   position: fixed;
-  backdrop-filter: blur(14px);
   top: 14%;
   bottom: 14%;
   left: 15%;
@@ -291,13 +325,22 @@ img {
   font-size: 1.5rem;
   color: var(--textColor);
   font-weight: bold;
-  resize: none;
+  transition: all ease 1s;
+}
+.customWordsHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.customWordsHeader img {
+  filter: invert(50%);
 }
 #customWordsBox p {
   margin-bottom: 20px;
 }
+#customX_Btn {
+  filter: invert(100%);
+}
 #customWords {
-  /* display: none; */
   font-weight: bold;
   height: 90%;
   background-color: transparent;
@@ -310,4 +353,23 @@ img {
 }
 #customWords::-webkit-scrollbar {
   display: none;
+}
+.dropdown {
+  position: relative;
+  /* display: inline-block; */
+}
+
+.dropdownBtns {
+  width: max-content;
+  display: none;
+  position: absolute;
+  right: 100%;
+  top: 1%;
+  background-color: var(--mainBackground);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdownBtns {
+  display: flex;
+  flex-direction: column;
 }
