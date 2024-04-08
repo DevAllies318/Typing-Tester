@@ -39,7 +39,7 @@ const themes = [
     "rgb(245, 191, 191)",
     "rgb(255, 78, 78)",
   ],
-  ["rgb(164, 164, 164)", "rgb(0, 0, 0))", "rgb(255, 255, 255)", "rgb(0, 0, 0)"],
+  ["rgb(164, 164, 164)", "rgb(0, 0, 0)", "rgb(255, 255, 255)", "rgb(0, 0, 0)"],
 ];
 
 //function to change theme
@@ -53,6 +53,7 @@ function changeTheme() {
       root.style.setProperty("--textColor", themes[i][1]);
       root.style.setProperty("--themeColor", themes[i][2]);
       root.style.setProperty("--contentColor", themes[i][3]);
+      return;
     };
   }
 }
