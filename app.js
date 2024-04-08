@@ -6,7 +6,7 @@ let incorrectChars = 0;
 let totalWords = 0;
 let correctWords = 0;
 let incorrectWords = 0;
-let time = 1;
+let time = 30;
 let timeTaken = 0;
 let started = false;
 const notAllowed = "[]{};:'\\|,<.>/?`~1!2@3#4$5%6^7&8*9(0)-_=+\" ";
