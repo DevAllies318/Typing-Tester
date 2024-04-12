@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="nav">
+        <h1 class="logo"><span>Flash</span>Typer</h1>
+
+        <div class="navElements">
+          <a href="test.html" id="login">Login</a>
+          <a href="#createAcc" id="createAcc">Create Account</a>
+          <a href="#profile" id="profile">Profile</a>
+          <img
+            width="24"
+            height="24"
+            src="https://img.icons8.com/material-sharp/24/settings.png"
+            alt="settings"
+            id="settings"
+          />
+        </div>
+      </div>
+      <div class="main">
+        <div class="timeSelect">
+          <h3>Time:</h3>
+          <input type="button" class="uncheck" value="15" id="time15" />
+          <input type="button" class="uncheck" value="30" id="time30" />
+          <input type="button" class="uncheck" value="60" id="time60" />
+          <input type="button" class="uncheck" value="120" id="time120" />
+          <input type="number" id="chooseTime" placeholder="Custom" />
+          <button id="timeOkBtn">OK</button>
+        </div>
+        <div id="textBox">
+          <div id="timerTxt"></div>
+          <div id="sourceTxt" oncopy="return false"></div>
+          <input
+            type="text"
+            id="userTxt"
+            oncut="alert(`Refrain From Malpractice`); return false"
+            onpaste="alert(`Refrain From Malpractice`); return false"
+            oncopy="alert(`Refrain From Malpractice`); return false"
+          />
+          <img
+            width="50"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/000000/reboot.png"
+            alt="reboot"
+            id="reset"
+          />
+        </div>
+        <div class="options">
+          <button id="customWordsBtn">Custom Words</button>
+          <button>Leader Board</button>
+          <button>Change Layout</button>
+          <div class="dropdown">
+            <button class="dropbtn">Change Theme</button>
+            <div class="dropdownBtns">
+              <button class="changeThemeBtn">Oceanic Bliss</button>
+              <button class="changeThemeBtn">Hakerrr</button>
+              <button class="changeThemeBtn">Forest Ferns</button>
+              <button class="changeThemeBtn">Ruby Rouge</button>
+              <button class="changeThemeBtn">Silver Shadows</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="resultPage">
+        <h1>RESULTS:</h1>
+        <div class="resultValues">
+          <div>
+            <span>Words Per Minute (WPM):</span>
+            <span class="calculations"></span>
+          </div>
+          <div><span>Accuracy: </span> <span class="calculations"></span></div>
+          <div>
+            <span>Words Typed: </span> <span class="calculations"></span>
+          </div>
+          <div>
+            <span>Correctly Typed: </span> <span class="calculations"></span>
+          </div>
+          <div>
+            <span>Incorrectly Typed: </span> <span class="calculations"></span>
+          </div>
+          <div>
+            <span>Time Taken: </span> <span class="calculations"></span>
+          </div>
+        </div>
+        <button id="resultOkBtn">OK</button>
+      </div>
+      <div id="transparentBox"></div>
+      <div id="customWordsBox">
+        <div class="customWordsHeader">
+          <p>
+            Enter space separated words (No numbers or special characters)<br />Max
+            Limit: 1000 words
+          </p>
+          <img
+            id="customX_Btn"
+            width="24"
+            height="24"
+            src="https://img.icons8.com/material-rounded/24/cancel--v1.png"
+            alt="cancel--v1"
+          />
+        </div>
+        <textarea id="customWords"></textarea>
+        <button id="TextBtn">OK</button>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
