@@ -1,6 +1,7 @@
 const reset = document.getElementById("reset");
 const input = document.querySelector("#userTxt");
 const transparentBox = document.querySelector("#transparentBox");
+const sourceText = document.querySelector("#sourceTxt");
 let correctChars = 0;
 let incorrectChars = 0;
 let totalWords = 0;
@@ -12,6 +13,7 @@ let started = false;
 const notAllowed = "[]{};:'\\|,<.>/?`~1!2@3#4$5%6^7&8*9(0)-_=+\" ";
 const Allowed =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZBackspace' ";
+// words = "about the quick brown fox jumps over the lazy dog".split(" ");
 words =
   "about above add after again air all almost along also always an and animal another answer any are around as ask at away back be because been before began begin being below between big book both boy but by call came can car carry change children city close come could country cut day did different do does don't down each earth eat end enough even every example eye face family far father feet few find first follow food for form found four from get girl give go good got great group grow had hand hard has have he head hear help her here high him his home house how idea if important in Indian into is it its it's just keep kind know land large last later learn leave left let letter life light like line list little live long look made make man many may me mean men might mile miss more most mother mountain move much must my name near need never new next night no not now number of off often oil old on once one only open or other our out over own page paper part people picture place plant play point put question quick quickly quite read really right river run said same saw say school sea second see seem sentence set she should show side small so some something sometimes song soon sound spell start state still stop story study such take talk tell than that the their them then there these they thing think this those thought three through time to together too took tree try turn two under until up us use very walk want was watch water way we well went were what when where which while white who why will with without word work world would write year you young your".split(
     " "
@@ -78,7 +80,7 @@ customWordsBtn.addEventListener("click", () => {
       setTimeout(() => {
         transparentBox.style.display = "none";
       }, 300);
-      input.focus();
+      // input.focus();
     });
     customWordsBox.classList.add("animation1");
     customWordsBox.classList.remove("animation2");
@@ -100,7 +102,7 @@ customWordsBtn.addEventListener("click", () => {
         }, 300);
 
         userWords = customTextBox.value.split(" ");
-        input.focus();
+        // input.focus();
         keyboardstart(userWords);
       }
     });
@@ -121,7 +123,7 @@ function selectTime() {
         }
         times[i].classList.toggle("check");
         timeTxt.innerHTML = times[i].value + "s";
-        input.focus();
+        // input.focus();
         time = times[i].value;
       };
     }
@@ -141,13 +143,17 @@ function selectTime() {
           time = customTime.value;
         }
         timeTxt.innerHTML = time + "s";
-        input.focus();
+        // input.focus();
       }
     });
   }
 }
 reset.addEventListener("click", () => {
   location.reload();
+});
+
+sourceText.addEventListener("click", () => {
+  // input.focus();
 });
 
 //function to start and end timer
@@ -164,7 +170,7 @@ function timercnt() {
         customTime.disabled = true;
         timeOkBtn.disabled = true;
         let timer = setInterval(() => {
-          input.focus();
+          // input.focus();
           time--;
           timeTaken++;
           timeTxt.innerHTML = time + "s";
@@ -184,53 +190,98 @@ function timercnt() {
     }
   });
 }
-
+sourceText.addEventListener("click", () => {
+  input.focus();
+});
+let wordInd = 0;
 //function to update the words and check correct, incorrect words and manage UI
 function keyboardstart(displayedWords) {
-  const sourceText = document.querySelector("#sourceTxt");
   sourceText.textContent = "";
-  while (displayedWords.length < 500) {
+  while (displayedWords.length < 300) {
     let randomIndex = Math.floor(Math.random() * displayedWords.length);
     displayedWords.push(displayedWords[randomIndex]);
   }
   words = shuffle(displayedWords);
   for (let i = 0; i < displayedWords.length; i++) {
     let currentWord = document.createElement("span");
-    currentWord.innerHTML = displayedWords[i];
+    for (let j = 0; j < displayedWords[i].length; j++) {
+      let currentLetter = document.createElement("span");
+      currentLetter.innerHTML = displayedWords[i][j];
+      currentLetter.classList.add("letter");
+      currentWord.appendChild(currentLetter);
+    }
+    let space = document.createElement("span");
+    space.innerHTML = " ";
+    space.classList.add("letter");
+    currentWord.appendChild(space);
     currentWord.classList.add("word");
     sourceText.appendChild(currentWord);
   }
-  refWords = document.getElementsByClassName("word");
+  let refLetters = document.getElementsByClassName("letter");
+  let refWords = document.getElementsByClassName("word");
+  refLetters[0].classList.add("cursor");
   ind = 0;
-  refWords[ind].style.scale = "110%";
-  refWords[ind].style.borderBottom = ".15rem solid white";
-  refWords[ind].style.color = "white";
+
   input.addEventListener("keydown", (event) => {
-    const scrollPosition = refWords[ind].offsetTop - sourceText.offsetTop;
+    const scrollPosition = refLetters[ind].offsetTop - sourceText.offsetTop;
     sourceText.scrollTop = scrollPosition;
-    if (event.key === " " && input.value.trim() === "") {
+    if (
+      (event.key === " " &&
+        (ind == 0 || refLetters[ind - 1].innerHTML === " ")) ||
+      !Allowed.includes(event.key)
+    ) {
       event.preventDefault();
+      return;
     }
-    if (event.key === " " && input.value.trim() !== "") {
-      event.preventDefault();
-      totalWords++;
-      const typed = input.value;
-      input.value = "";
-      refWords[ind].style.borderBottom = "transparent";
-      refWords[ind].style.scale = "100%";
-      refWords[ind + 1].style.borderBottom = ".15rem solid white";
-      refWords[ind + 1].style.scale = "110%";
-      refWords[ind + 1].style.color = "white";
-      if (refWords[ind].innerHTML === typed) {
-        correctChars += typed.length;
-        correctWords++;
-      } else {
-        refWords[ind].style.color = "red";
-        incorrectChars = typed.length;
-        incorrectWords++;
+    let typed = event.key;
+    if (typed === " " && refLetters[ind].innerHTML != " ") {
+      refLetters[ind].classList.remove("cursor");
+      while (refLetters[ind].innerHTML != " ") {
+        ind++;
       }
-      ind += 1;
     }
+    if (
+      refLetters[ind].innerHTML === " " &&
+      typed != " " &&
+      typed != "Backspace"
+    ) {
+      let currentWord = refLetters[ind].parentNode;
+      currentWord.removeChild(refLetters[ind]);
+      let currentLetter = document.createElement("span");
+      currentLetter.innerHTML = typed;
+      currentLetter.classList.add("letter");
+      currentLetter.classList.add("wrongLetter");
+      currentLetter.style.color = "red";
+      currentWord.appendChild(currentLetter);
+      currentLetter = document.createElement("span");
+      currentLetter.innerHTML = " ";
+      currentLetter.classList.add("letter");
+      currentWord.appendChild(currentLetter);
+    }
+
+    if (typed === "Backspace") {
+      if (ind != 0) {
+        if (refLetters[ind - 1].classList.contains("wrongLetter")) {
+          currentWord = refLetters[ind].parentNode;
+          currentWord.removeChild(refLetters[ind - 1]);
+        }
+        refLetters[ind].classList.remove("cursor");
+        ind--;
+        refLetters[ind].style.color = "var(--themeColor)";
+      }
+    } else {
+      if (
+        typed === refLetters[ind].innerHTML &&
+        !refLetters[ind].classList.contains("wrongLetter")
+      ) {
+        refLetters[ind].style.color = "white";
+      } else {
+        refLetters[ind].style.color = "red";
+      }
+      ind++;
+    }
+    if (ind != 0) refLetters[ind - 1].classList.remove("cursor");
+    refLetters[ind].classList.add("cursor");
   });
 }
 //function to calculate and display result
@@ -262,7 +313,6 @@ function getResult() {
     location.reload();
   });
 }
-
 //calling functions
 input.focus();
 selectTime();
